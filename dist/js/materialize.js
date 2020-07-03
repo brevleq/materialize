@@ -10672,16 +10672,18 @@ $jscomp.polyfill = function (e, r, p, m) {
       value: function _removeEventHandlers() {
         var _this64 = this;
 
-        if (typeof window.ontouchstart !== 'undefined') {
-          this.el.removeEventListener('touchstart', this._handleCarouselTapBound);
-          this.el.removeEventListener('touchmove', this._handleCarouselDragBound);
-          this.el.removeEventListener('touchend', this._handleCarouselReleaseBound);
+        if (this.options.draggable) {
+          if (typeof window.ontouchstart !== 'undefined') {
+            this.el.removeEventListener('touchstart', this._handleCarouselTapBound);
+            this.el.removeEventListener('touchmove', this._handleCarouselDragBound);
+            this.el.removeEventListener('touchend', this._handleCarouselReleaseBound);
+          }
+          this.el.removeEventListener('mousedown', this._handleCarouselTapBound);
+          this.el.removeEventListener('mousemove', this._handleCarouselDragBound);
+          this.el.removeEventListener('mouseup', this._handleCarouselReleaseBound);
+          this.el.removeEventListener('mouseleave', this._handleCarouselReleaseBound);
+          this.el.removeEventListener('click', this._handleCarouselClickBound);
         }
-        this.el.removeEventListener('mousedown', this._handleCarouselTapBound);
-        this.el.removeEventListener('mousemove', this._handleCarouselDragBound);
-        this.el.removeEventListener('mouseup', this._handleCarouselReleaseBound);
-        this.el.removeEventListener('mouseleave', this._handleCarouselReleaseBound);
-        this.el.removeEventListener('click', this._handleCarouselClickBound);
 
         if (this.showIndicators && this.$indicators) {
           this.$indicators.find('.indicator-item').each(function (el, i) {

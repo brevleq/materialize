@@ -142,7 +142,7 @@
      * Setup Event Handlers
      */
     _setupEventHandlers() {
-      if(this.options.draggable) {
+      if (this.options.draggable) {
         this._handleCarouselTapBound = this._handleCarouselTap.bind(this);
         this._handleCarouselDragBound = this._handleCarouselDrag.bind(this);
         this._handleCarouselReleaseBound = this._handleCarouselRelease.bind(this);
@@ -179,16 +179,18 @@
      * Remove Event Handlers
      */
     _removeEventHandlers() {
-      if (typeof window.ontouchstart !== 'undefined') {
-        this.el.removeEventListener('touchstart', this._handleCarouselTapBound);
-        this.el.removeEventListener('touchmove', this._handleCarouselDragBound);
-        this.el.removeEventListener('touchend', this._handleCarouselReleaseBound);
+      if (this.options.draggable) {
+        if (typeof window.ontouchstart !== 'undefined') {
+          this.el.removeEventListener('touchstart', this._handleCarouselTapBound);
+          this.el.removeEventListener('touchmove', this._handleCarouselDragBound);
+          this.el.removeEventListener('touchend', this._handleCarouselReleaseBound);
+        }
+        this.el.removeEventListener('mousedown', this._handleCarouselTapBound);
+        this.el.removeEventListener('mousemove', this._handleCarouselDragBound);
+        this.el.removeEventListener('mouseup', this._handleCarouselReleaseBound);
+        this.el.removeEventListener('mouseleave', this._handleCarouselReleaseBound);
+        this.el.removeEventListener('click', this._handleCarouselClickBound);
       }
-      this.el.removeEventListener('mousedown', this._handleCarouselTapBound);
-      this.el.removeEventListener('mousemove', this._handleCarouselDragBound);
-      this.el.removeEventListener('mouseup', this._handleCarouselReleaseBound);
-      this.el.removeEventListener('mouseleave', this._handleCarouselReleaseBound);
-      this.el.removeEventListener('click', this._handleCarouselClickBound);
 
       if (this.showIndicators && this.$indicators) {
         this.$indicators.find('.indicator-item').each((el, i) => {
