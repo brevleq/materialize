@@ -10541,6 +10541,7 @@ $jscomp.polyfill = function (e, r, p, m) {
        * @prop {Boolean} fullWidth
        * @prop {Boolean} indicators
        * @prop {Boolean} noWrap
+       * @prop {Boolean} draggable
        * @prop {Function} onCycleTo
        */
       _this62.options = $.extend({}, Carousel.defaults, options);
@@ -10636,11 +10637,9 @@ $jscomp.polyfill = function (e, r, p, m) {
           this._handleCarouselReleaseBound = this._handleCarouselRelease.bind(this);
           this._handleCarouselClickBound = this._handleCarouselClick.bind(this);
 
-          if (typeof window.ontouchstart !== 'undefined') {
-            this.el.addEventListener('touchstart', this._handleCarouselTapBound);
-            this.el.addEventListener('touchmove', this._handleCarouselDragBound);
-            this.el.addEventListener('touchend', this._handleCarouselReleaseBound);
-          }
+          this.el.addEventListener('touchstart', this._handleCarouselTapBound);
+          this.el.addEventListener('touchmove', this._handleCarouselDragBound);
+          this.el.addEventListener('touchend', this._handleCarouselReleaseBound);
 
           this.el.addEventListener('mousedown', this._handleCarouselTapBound);
           this.el.addEventListener('mousemove', this._handleCarouselDragBound);
@@ -10673,11 +10672,10 @@ $jscomp.polyfill = function (e, r, p, m) {
         var _this64 = this;
 
         if (this.options.draggable) {
-          if (typeof window.ontouchstart !== 'undefined') {
-            this.el.removeEventListener('touchstart', this._handleCarouselTapBound);
-            this.el.removeEventListener('touchmove', this._handleCarouselDragBound);
-            this.el.removeEventListener('touchend', this._handleCarouselReleaseBound);
-          }
+          this.el.removeEventListener('touchstart', this._handleCarouselTapBound);
+          this.el.removeEventListener('touchmove', this._handleCarouselDragBound);
+          this.el.removeEventListener('touchend', this._handleCarouselReleaseBound);
+
           this.el.removeEventListener('mousedown', this._handleCarouselTapBound);
           this.el.removeEventListener('mousemove', this._handleCarouselDragBound);
           this.el.removeEventListener('mouseup', this._handleCarouselReleaseBound);
