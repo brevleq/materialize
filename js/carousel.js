@@ -1,4 +1,4 @@
-(function($) {
+(function ($) {
   'use strict';
 
   let _defaults = {
@@ -41,6 +41,7 @@
        * @prop {Boolean} fullWidth
        * @prop {Boolean} indicators
        * @prop {Boolean} noWrap
+       * @prop {Boolean} draggable
        * @prop {Function} onCycleTo
        */
       this.options = $.extend({}, Carousel.defaults, options);
@@ -148,11 +149,9 @@
         this._handleCarouselReleaseBound = this._handleCarouselRelease.bind(this);
         this._handleCarouselClickBound = this._handleCarouselClick.bind(this);
 
-        if (typeof window.ontouchstart !== 'undefined') {
-          this.el.addEventListener('touchstart', this._handleCarouselTapBound);
-          this.el.addEventListener('touchmove', this._handleCarouselDragBound);
-          this.el.addEventListener('touchend', this._handleCarouselReleaseBound);
-        }
+        this.el.addEventListener('touchstart', this._handleCarouselTapBound);
+        this.el.addEventListener('touchmove', this._handleCarouselDragBound);
+        this.el.addEventListener('touchend', this._handleCarouselReleaseBound);
 
         this.el.addEventListener('mousedown', this._handleCarouselTapBound);
         this.el.addEventListener('mousemove', this._handleCarouselDragBound);
@@ -180,11 +179,10 @@
      */
     _removeEventHandlers() {
       if (this.options.draggable) {
-        if (typeof window.ontouchstart !== 'undefined') {
-          this.el.removeEventListener('touchstart', this._handleCarouselTapBound);
-          this.el.removeEventListener('touchmove', this._handleCarouselDragBound);
-          this.el.removeEventListener('touchend', this._handleCarouselReleaseBound);
-        }
+        this.el.removeEventListener('touchstart', this._handleCarouselTapBound);
+        this.el.removeEventListener('touchmove', this._handleCarouselDragBound);
+        this.el.removeEventListener('touchend', this._handleCarouselReleaseBound);
+
         this.el.removeEventListener('mousedown', this._handleCarouselTapBound);
         this.el.removeEventListener('mousemove', this._handleCarouselDragBound);
         this.el.removeEventListener('mouseup', this._handleCarouselReleaseBound);
@@ -530,9 +528,9 @@
           el.classList.add('active');
         }
         let transformString = `${alignment} translateX(${-delta / 2}px) translateX(${dir *
-          this.options.shift *
-          tween *
-          i}px) translateZ(${this.options.dist * tween}px)`;
+        this.options.shift *
+        tween *
+        i}px) translateZ(${this.options.dist * tween}px)`;
         this._updateItemStyle(el, centerTweenedOpacity, 0, transformString);
       }
 
@@ -549,7 +547,7 @@
         if (!this.noWrap || this.center + i < this.count) {
           el = this.images[this._wrap(this.center + i)];
           let transformString = `${alignment} translateX(${this.options.shift +
-            (this.dim * i - delta) / 2}px) translateZ(${zTranslation}px)`;
+          (this.dim * i - delta) / 2}px) translateZ(${zTranslation}px)`;
           this._updateItemStyle(el, tweenedOpacity, -i, transformString);
         }
 
@@ -565,7 +563,7 @@
         if (!this.noWrap || this.center - i >= 0) {
           el = this.images[this._wrap(this.center - i)];
           let transformString = `${alignment} translateX(${-this.options.shift +
-            (-this.dim * i - delta) / 2}px) translateZ(${zTranslation}px)`;
+          (-this.dim * i - delta) / 2}px) translateZ(${zTranslation}px)`;
           this._updateItemStyle(el, tweenedOpacity, -i, transformString);
         }
       }
@@ -575,8 +573,8 @@
       if (!this.noWrap || (this.center >= 0 && this.center < this.count)) {
         el = this.images[this._wrap(this.center)];
         let transformString = `${alignment} translateX(${-delta / 2}px) translateX(${dir *
-          this.options.shift *
-          tween}px) translateZ(${this.options.dist * tween}px)`;
+        this.options.shift *
+        tween}px) translateZ(${this.options.dist * tween}px)`;
         this._updateItemStyle(el, centerTweenedOpacity, 0, transformString);
       }
 
