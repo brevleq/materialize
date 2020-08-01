@@ -168,10 +168,10 @@
       }
 
       // Resize
-      let throttledResize = M.throttle(this._handleResize, 200);
-      this._handleThrottledResizeBound = throttledResize.bind(this);
+      // let throttledResize = M.throttle(this._handleResize, 200);
+      // this._handleThrottledResizeBound = throttledResize.bind(this);
 
-      window.addEventListener('resize', this._handleThrottledResizeBound);
+      // window.addEventListener('resize', this._handleThrottledResizeBound);
     }
 
     /**
